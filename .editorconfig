@@ -1,9 +1,12 @@
-[*.{js,jsx,mjs,cjs,ts,tsx,mts,cts,vue,css,scss,sass,less,styl}]
-charset = utf-8
-indent_size = 2
-indent_style = space
-insert_final_newline = true
-trim_trailing_whitespace = true
+# 針對 Vue、JS、CSS 等前端檔案的編輯器設定
+[*.{js,vue,css}]
+# 基本編碼與縮排設定
+charset = utf-8                     # 使用 UTF-8 編碼
+indent_size = 2                     # 縮排使用 2 個空格
+indent_style = space               # 使用空格作為縮排
 
-end_of_line = lf
-max_line_length = 100
+# 檔案格式規範
+end_of_line = lf                   # 使用 LF 換行符號
+insert_final_newline = true        # 檔案結尾需要換行
+trim_trailing_whitespace = true    # 移除行尾空白
+max_line_length = 100             # 每行最大長度 100 字元

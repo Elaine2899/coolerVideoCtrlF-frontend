@@ -1,25 +1,20 @@
-import { defineConfig, globalIgnores } from 'eslint/config'
-import globals from 'globals'
+// 引入必要的 ESLint 配置工具
+import { defineConfig } from 'eslint/config'
 import js from '@eslint/js'
 import pluginVue from 'eslint-plugin-vue'
 import skipFormatting from '@vue/eslint-config-prettier/skip-formatting'
 
+// ESLint 主要配置
 export default defineConfig([
+  // 設定需要檢查的文件類型
   {
-    name: 'app/files-to-lint',
-    files: ['**/*.{js,mjs,jsx,vue}'],
+    files: ['**/*.{js,vue}'],
   },
 
-  globalIgnores(['**/dist/**', '**/dist-ssr/**', '**/coverage/**']),
+  // 忽略打包後的文件
+  { ignores: ['dist/**'] },
 
-  {
-    languageOptions: {
-      globals: {
-        ...globals.browser,
-      },
-    },
-  },
-
+  // 使用推薦的 JavaScript 和 Vue 規則
   js.configs.recommended,
   ...pluginVue.configs['flat/essential'],
   skipFormatting,

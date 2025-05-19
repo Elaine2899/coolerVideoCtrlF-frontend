@@ -1,23 +1,26 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
+import { onMounted } from 'vue'
+import { healthCheck } from '@/services/api'
+import MainLayout from '@/components/layout/MainLayout.vue'
+
+// 測試後端連接
+onMounted(async () => {
+  try {
+    const res = await healthCheck()
+    console.log('✅ 後端回應：', res.data)
+  } catch (err) {
+    console.error('❌ 後端錯誤：', err.message)
+    console.error('詳細錯誤：', err.response?.data || err)
+  }
+})
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </div>
-  </header>
-
-  <RouterView />
+  <MainLayout>
+    <RouterView />
+  </MainLayout>
 </template>
 
 <style scoped>

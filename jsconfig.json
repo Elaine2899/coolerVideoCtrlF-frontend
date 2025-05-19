@@ -1,8 +1,10 @@
 {
   "compilerOptions": {
+    // 設定路徑別名,讓 @ 符號指向 src 資料夾,方便引入模組
     "paths": {
       "@/*": ["./src/*"]
     }
   },
+  // 排除不需要編譯的資料夾
   "exclude": ["node_modules", "dist"]
 }
