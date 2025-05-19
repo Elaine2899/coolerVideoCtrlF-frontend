@@ -2,7 +2,7 @@
 import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
 import { onMounted } from 'vue'
-import { healthCheck } from '@/services/api'
+import { healthCheck } from '@/utils/api'
 import MainLayout from '@/components/layout/MainLayout.vue'
 
 // 測試後端連接
