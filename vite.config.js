@@ -22,18 +22,13 @@ export default defineConfig({
     alias: {
       // 設定 @ 符號指向 src 目錄，方便引入模組
       '@': fileURLToPath(new URL('./src', import.meta.url))
-    },
+    }
   },
 
-  // 開發服務器配置
-  server: {
-    proxy: {
-      // 配置 API 請求代理
-      '/api': {
-        target: process.env.VITE_API_URL,    // API 目標地址，從環境變數讀取
-        changeOrigin: true,                  // 支援跨域請求
-        rewrite: (path) => path.replace(/^\/api/, '')  // 重寫 API 路徑
-      }
+  // 建置配置
+  build: {
+    rollupOptions: {
+      external: [],  // 空陣列表示不排除任何相依套件
     }
   }
 })

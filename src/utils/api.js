@@ -1,11 +1,11 @@
 import axios from 'axios'
 
 const api = axios.create({
-    baseURL: import.meta.env.VITE_API_URL,
+    baseURL: import.meta.env.VITE_API_URL || 'http://localhost:8080',
     headers: {
         'Content-Type': 'application/json'
     },
-    // timeout: 10000  // 可選：添加請求超時設定
+    timeout: 10000  // 可選：添加請求超時設定
 })
 
 // 可選：添加請求攔截器
