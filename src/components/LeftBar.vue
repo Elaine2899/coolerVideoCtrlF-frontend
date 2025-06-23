@@ -9,7 +9,7 @@ const openQuery = reactive({})
 const learningMaps = ref({})
 
 onMounted(async () => {
-  const res = await axios.get('http://localhost:8000/map')
+  const res = await axios.get('http://localhost:8000/learning_map')
   const query = res.data.query
   const map = res.data.learning_map
 
