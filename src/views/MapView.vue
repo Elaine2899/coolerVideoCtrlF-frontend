@@ -1,7 +1,10 @@
 <script setup>
 import { ref, watch } from 'vue'
+import axios from 'axios'
 import LeftBar from '@/components/LeftBar.vue'
+import SearchBox from '@/components/SearchBox.vue'
 
+const mapQuery = ref('')
 // 儲存目前被選到的 phase
 const selectedPhase = ref(null)
 
@@ -27,6 +30,29 @@ const nextSlide = () => {
   currentIndex.value = (currentIndex.value + 1) % total
 }
 
+const handleMap = async () => {
+  const token = localStorage.getItem('access_token')
+  if (!mapQuery.value) return
+
+  try {
+    const res = await axios.get('http://localhost:8000/learning_map', {
+      params: { query: mapQuery.value },
+      headers: {
+        Authorization: token
+      }
+    })
+
+    const result = res.data
+
+    if (result.query && result.learning_map && Object.keys(result.learning_map).length > 0) {
+      handlePhaseSelect({ query: result.query, ...result.learning_map })
+    } else {
+      console.warn('後端回傳空的學習地圖')
+    }
+  } catch (err) {
+    console.error('生成學習地圖失敗', err.response?.data || err.message)
+  }
+}
 </script>
 
 <template>
@@ -35,10 +61,13 @@ const nextSlide = () => {
     <LeftBar @selectPhase="handlePhaseSelect" />
 
     <div class="layout">
+      <!-- 生成地圖框 -->
+      <div class="search-wrapper">
+        <SearchBox v-model="mapQuery" @enter="handleMap" />
+      </div>
       <!-- 主內容 -->
       <main class="content" v-if="selectedPhase">
         <div class="courseLabel">{{ selectedPhase.query }}</div>
-
         <h1>{{ selectedPhase.title }}</h1>
 
         <!-- 影片列表 -->
@@ -99,6 +128,10 @@ const nextSlide = () => {
 </template>
 
 <style scoped>
+.search-wrapper {
+
+}
+
 .mapPage {
   min-height: 100vh;
   background-color: #85b1c5;

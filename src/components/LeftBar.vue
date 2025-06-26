@@ -1,5 +1,5 @@
 <script setup>
-import { reactive, ref, onMounted } from 'vue'
+import { reactive, ref, onMounted, computed } from 'vue'
 import axios from 'axios'
 
 // emit phase 資料給 MapView
@@ -8,13 +8,39 @@ const emit = defineEmits(['selectPhase'])
 const openQuery = reactive({})
 const learningMaps = ref({})
 
-onMounted(async () => {
-  const res = await axios.get('http://localhost:8000/learning_map')
-  const query = res.data.query
-  const map = res.data.learning_map
+// 只回傳有 query 且 phases 不為空的項目
+const filteredLearningMaps = computed(() => {
+  return Object.fromEntries(
+    Object.entries(learningMaps.value).filter(([query, phases]) => {
+      return query && Array.isArray(phases) && phases.length > 0
+    })
+  )
+})
 
-  learningMaps.value[query] = map
-  openQuery[query] = true
+onMounted(async () => {
+  const token = localStorage.getItem("access_token")
+
+  try {
+    const res = await axios.get('http://localhost:8000/show_learning_map', {
+      headers: {
+        Authorization: token
+      }
+    })
+
+    // const query = res.data.query
+    // const map = res.data.learning_map
+
+    // learningMaps.value[query] = map
+    // openQuery[query] = true
+    const map = res.data.learning_map
+
+    for (const query in map) {
+      learningMaps.value[query] = map[query]
+      openQuery[query] = true
+    }
+  } catch (err) {
+    console.error("API 認證失敗", err.response?.data || err.message)
+  }
 })
 
 const toggleQuery = (query) => {
@@ -32,7 +58,8 @@ const handlePhaseClick = (query, phaseKey, phaseData) => {
 
 <template>
   <aside class="leftbar">
-    <div v-for="(phases, query) in learningMaps" :key="query">
+    <div v-for="(phases, query) in filteredLearningMaps" :key="query">
+
       <div class="section" @click="toggleQuery(query)">
         <span class="arrow">{{ openQuery[query] ? '▼' : '▶' }}</span>
         {{ query }}

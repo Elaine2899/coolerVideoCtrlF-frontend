@@ -20,7 +20,7 @@ const onIconClick = () => {
       :value="modelValue"
       @input="onInput"
       @keydown="onKeyDown"
-      placeholder="請輸入搜尋關鍵字..."
+      placeholder="請輸入關鍵字..."
     />
     <span class="icon" @click="onIconClick">🔍</span>
   </div>
