@@ -15,10 +15,26 @@ a,
   padding: 3px;
 }
 
+button {
+  background-color: #3d5373;
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 1rem 0;
+  transition: background-color 0.3s ease;
+}
+
+.generate-btn:not(:disabled):hover {
+  background-color: #9cbcd1;
+  color: #3d5373
+}
+
 @media (hover: hover) {
-  a:hover {
+  /* a:hover {
     background-color: hsla(160, 100%, 37%, 0.2);
-  }
+  } */
 }
 
 @media (min-width: 1024px) {

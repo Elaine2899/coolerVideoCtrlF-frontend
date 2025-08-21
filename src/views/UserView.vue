@@ -50,11 +50,11 @@ onMounted(() => {
   justify-content: center;
   align-items: center;
   min-height: calc(100vh - 60px);
-  background: #85b1c5;
+  background: #D4F1F9;
 }
 
 .user-info {
-  background: #4e6a96;
+  background: #91a3c2;
   padding: 2rem;
   border-radius: 10px;
   color: white;
@@ -67,10 +67,17 @@ onMounted(() => {
 
 button {
   padding: 0.5rem;
-  background: #c27878;
+  background: rgba(240, 229, 155, 1);
   border: none;
   border-radius: 4px;
-  color: white;
+  color: #3d5373;
   cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+button:hover {
+  background: rgba(240, 229, 155, 0.7);
+  color: white;
+  
 }
 </style>

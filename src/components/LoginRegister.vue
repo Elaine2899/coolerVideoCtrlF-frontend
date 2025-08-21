@@ -31,12 +31,19 @@ const handleSubmit = async () => {
   try {
     if (props.mode === 'login') {
       const res = await axios.post('http://localhost:8000/user_login', payload)
+      if (res.data.status === 'User login successfully') {
+        successMessage.value = '登入成功！'
+        router.push('/')
+      } else {
+        errorMessage.value = res.data.message || res.data.status
+      }
       localStorage.setItem('access_token', res.data.access_token)
-      router.push('/')
+      
     } else {
       const res = await axios.post('http://localhost:8000/user_register', payload)
       if (res.data.status === 'User registered successfully') {
         successMessage.value = '註冊成功，請登入！'
+
       } else {
         errorMessage.value = res.data.message || res.data.status
       }

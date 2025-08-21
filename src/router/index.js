@@ -37,6 +37,12 @@ const router = createRouter({
       name: 'video',
       component: () => import('../views/VideoView.vue'),
     },
+    {
+      path: '/videos/:id',
+      name: 'Detail',
+      component: () => import('@/views/Detail.vue'),
+      props: route => ({ videoId: route.params.id, query: route.query.query || '' })
+    },
   ],
 })
 
